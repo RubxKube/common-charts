@@ -5,6 +5,11 @@ yaml-files:
   - '*.yml'
   - '.yamllint'
 
+ignore:
+  - charts/**/templates/*
+  - all/this/directory/
+  - '*.template.yaml'
+
 rules:
   braces: enable
   brackets: enable
@@ -30,5 +35,4 @@ rules:
   octal-values: disable
   quoted-strings: disable
   trailing-spaces: enable
-  truthy:
-    level: warning
+  truthy: disable
