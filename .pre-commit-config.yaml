@@ -1,3 +1,4 @@
+---
 repos:
   - repo: https://github.com/sirosen/fix-smartquotes
     rev: 0.1.1
@@ -7,3 +8,7 @@ repos:
     rev: v1.2.0
     hooks:
       - id: helm-docs
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.29.0
+    hooks:
+      - id: yamllint
