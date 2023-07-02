@@ -22,18 +22,14 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      {{- if .Values.image.repository.isPrivate }}
+      {{- if .Values.image.repositorySettings.isPrivate }}
       imagePullSecrets:
-        - name: "{{ .Values.image.repository.secretName }}"
+        - name: "{{ .Values.image.repositorySettings.secretName }}"
       {{- end }}
       containers:
         - name: {{ .Release.Name }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.image.repository.name }}
-          image: "{{ .Values.image.repository.name }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
-          {{- else }}
-          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
-          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
           - containerPort: {{ .Values.app.containerPort }}
           resources:
