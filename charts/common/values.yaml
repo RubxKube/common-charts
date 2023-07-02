@@ -20,11 +20,10 @@ deployment:
 
 # container
 image:
-  repository:
-    name: null
+  repositorySettings:
     isPrivate: false
     secretName: null
-  name: nginx
+  repository: nginx
   tag: latest
   pullPolicy: Always
 
