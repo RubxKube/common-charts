@@ -3,6 +3,27 @@ entries:
   common:
   - apiVersion: v1
     appVersion: "0"
+    created: "2023-07-02T10:21:25.31318Z"
+    description: Helm chart for generic monolithic app on Kubernetes
+    digest: 8d06450b50dc02e8323d1c1cb02f4f43c8044e3d6c2644e0dd4ff7987c0c5a42
+    home: https://github.com/RubxKube/common-charts
+    keywords:
+    - generic
+    - monolithic
+    - ingress-route
+    - ingress
+    kubeVersion: '>= 1.18'
+    maintainers:
+    - email: github@thoughtless.eu
+      name: QJOLY
+    name: common
+    sources:
+    - https://github.com/RubxKube/common-charts
+    urls:
+    - https://github.com/RubxKube/common-charts/releases/download/common-v0.2.0/common-v0.2.0.tgz
+    version: v0.2.0
+  - apiVersion: v1
+    appVersion: "0"
     created: "2023-06-27T13:20:32.94429143Z"
     description: Helm chart for generic monolithic app on Kubernetes
     digest: 27f5c0df3149c0b9acfb9596ee3b5bcd27bc2e283c96c492f04b61a4fe8edce4
@@ -22,4 +43,4 @@ entries:
     urls:
     - https://github.com/RubxKube/common-charts/releases/download/common-v0.1.0/common-v0.1.0.tgz
     version: v0.1.0
-generated: "2023-06-27T13:20:32.94429593Z"
+generated: "2023-07-02T10:21:25.3131877Z"
