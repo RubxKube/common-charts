@@ -6,6 +6,7 @@ metadata:
   labels:
     app: {{ .Release.Name }}
 spec:
+  {{ if .Values.ingress.ingressClassName }}ingressClassName: {{ .Values.ingress.ingressClassName }}{{ end }}
   rules:
   - host: {{ required "A variable 'hostName' is required!" .Values.ingress.hostName }}
     http:
