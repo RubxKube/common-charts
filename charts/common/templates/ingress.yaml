@@ -5,7 +5,12 @@ metadata:
   name: {{ .Release.Name }}
   labels:
     app: {{ .Release.Name }}
+{{- if .Values.ingress.certResolver }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.certResolver }}
+{{- end }}
 spec:
+  {{ if .Values.ingress.ingressClassName }}ingressClassName: {{ .Values.ingress.ingressClassName }}{{ end }}
   rules:
   - host: {{ required "A variable 'hostName' is required!" .Values.ingress.hostName }}
     http:
