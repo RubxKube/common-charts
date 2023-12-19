@@ -16,7 +16,7 @@ helm repo add rubxkube-common https://rubxkube.github.io/common-charts/ # Add th
 
 | Name  | Description | Chart Version | App Version |
 |-------|-------------|---------------|-------------|
-| common | Helm chart for generic monolithic app on Kubernetes | v0.2.0 | 0 |
+| common | Helm chart for generic monolithic app on Kubernetes | v0.2.1 | 0 |
 
 
 # Contributing 
