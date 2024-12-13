@@ -17,10 +17,10 @@ deployment:
   port: *containerPort
   minReplicas: 1
   strategy:
-    type: Replace
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
+    type: Recreate
+    # rollingUpdate:
+      # maxUnavailable: 25%
+      # maxSurge: 25%
 
 image:
   repositorySettings:
