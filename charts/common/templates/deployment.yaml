@@ -62,7 +62,6 @@ spec:
               {{- end }}
             {{- end }}
             {{- if .Values.variables.secret.existingSecret }}
-            toto
               {{- range $index, $value := .Values.variables.secret.existingSecret }}
           - name: {{ $value.envName }}
             valueFrom:
