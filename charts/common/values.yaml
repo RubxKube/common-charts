@@ -15,6 +15,7 @@ deployment:
   memoryLimit: null
   cpuLimit: null
   port: *containerPort
+  minReplicas: 1
   strategy:
     type: Replace
     rollingUpdate:
@@ -42,9 +43,18 @@ ingress:
 
 # env variables
 variables:
-  secret: {}
-  # user: "username"
-  # password: "hugepassword"
+  secret:
+    data: {}
+    # user: "username"
+    # password: "hugepassword"
+    existingSecret:
+      - name: "existing-secret"
+        key: "key"
+        envName: "ENV_NAME"
+      - name: another-existing-secret
+        key: key2
+        envName: ENV2_NAME
+
   nonSecret: {}
 #    author: name
 #    app: 1

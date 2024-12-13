@@ -6,11 +6,11 @@ metadata:
   labels:
     app: {{ .Release.Name }}
 spec:
-  replicas: {{ .Values.minReplicas }}
+  replicas: {{ .Values.deployment.minReplicas }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
-  {{- with .Values.strategy }}
+  {{- with .Values.deployment.strategy }}
   strategy:
     type: {{ .type }}
     rollingUpdate:
@@ -49,23 +49,35 @@ spec:
               {{- if .Values.deployment.cpuLimit }}
               cpu: "{{ .Values.deployment.cpuLimit }}"
               {{- end }}
-          {{- if or (.Values.variables.nonSecret) (.Values.variables.secret) }}
+          {{- if or (.Values.variables.nonSecret) (.Values.variables.secret) (.Values.secret.existingSecret) }}
           env:
-          {{- if .Values.variables.nonSecret }}
-          {{- range $index, $value := .Values.variables.nonSecret }}
+            {{- if .Values.variables.nonSecret }}
+              {{- range $index, $value := .Values.variables.nonSecret }}
           - name: {{ $index }}
             value: {{ $value | toString | quote }}
-          {{- end }}
-          {{- end }}
-          {{- if .Values.variables.secret }}
-          {{- range $index, $value := .Values.variables.secret }}
+              {{- end }}
+            {{- end }}
+            {{- if .Values.variables.secret }}
+              {{- range $index, $value := .Values.variables.secret }}
           - name: {{ $index }}
             valueFrom:
               secretKeyRef:
                 name: {{ $dot.Release.Name }}-{{ $index | lower | replace "_" "-" }}
                 key: secret
+              {{- end }}
+            {{- end }}
+            {{- if .Values.variables.secret.existingSecret }}
+              {{- range $index, $value := .Values.variables.secret.existingSecret }}
+          - name: {{ $value.envName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $value.name }}
+                key: {{ $value.key }}
+              {{- end }}
+            {{- end }}
+
           {{- end }}
-          {{- end }}
+          {{- if .Values.service.enabled }}
           {{- end }}
           {{- if .Values.startupProbeEnabled }}
           startupProbe:
