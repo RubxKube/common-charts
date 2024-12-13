@@ -1,4 +1,3 @@
-
 define: &containerPort 80
 
 service:
