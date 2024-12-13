@@ -1,4 +1,3 @@
----
 
 define: &containerPort 80
 
@@ -47,8 +46,8 @@ variables:
     data: {}
     # user: "username"
     # password: "hugepassword"
-    existingSecret: {}
-      # - name: "existing-secret"
+    existingSecret: []
+      # - name: "existing-secret-name"
       #   key: "key"
       #   envName: "ENV_NAME"
       # - name: another-existing-secret

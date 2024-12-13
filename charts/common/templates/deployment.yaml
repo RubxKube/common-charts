@@ -44,7 +44,7 @@ spec:
               {{- if .Values.deployment.cpuLimit }}
               cpu: "{{ .Values.deployment.cpuLimit }}"
               {{- end }}
-          {{- if or (.Values.variables.nonSecret) (.Values.variables.secret) (.Values.secret.existingSecret) }}
+          {{- if or (.Values.variables.nonSecret) (.Values.variables.secret.data) (.Values.variables.secret.existingSecret) }}
           env:
             {{- if .Values.variables.nonSecret }}
               {{- range $index, $value := .Values.variables.nonSecret }}
@@ -53,7 +53,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- if .Values.variables.secret }}
-              {{- range $index, $value := .Values.variables.secret }}
+              {{- range $index, $value := .Values.variables.secret.data }}
           - name: {{ $index }}
             valueFrom:
               secretKeyRef:
@@ -62,6 +62,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- if .Values.variables.secret.existingSecret }}
+            toto
               {{- range $index, $value := .Values.variables.secret.existingSecret }}
           - name: {{ $value.envName }}
             valueFrom:
