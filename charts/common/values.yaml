@@ -1,24 +1,26 @@
 ---
+
 define: &containerPort 80
 
-# application
-app:
+service:
+  type: ClusterIP
+  enabled: true
   servicePort: 80
   containerPort: *containerPort
+  extraLabels: {}
 
-# deployment
 deployment:
   memoryRequest: null
   cpuRequest: null
   memoryLimit: null
   cpuLimit: null
+  port: *containerPort
   strategy:
     type: Replace
     rollingUpdate:
       maxUnavailable: 25%
       maxSurge: 25%
 
-# container
 image:
   repositorySettings:
     isPrivate: false
@@ -27,19 +29,16 @@ image:
   tag: latest
   pullPolicy: Always
 
-# ingress
 ingress:
   enabled: false
   hostName: toto.lan
+  extraLabels: {}
+  annotations: {}
   tls:
     enabled: true
     secretName: ""
   # For Ingress CRD
   ingressClassName: istio
-  # For IngressRoute CRD
-  isIngressRoute: false
-  entrypoint: websecure
-  certResolver: mycertresolver  # leave empty if you don't use, tls.enabled must be true and secretName must me empty
 
 # env variables
 variables:

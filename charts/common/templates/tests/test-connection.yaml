@@ -12,7 +12,7 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ .Release.Name }}:{{ .Values.app.servicePort }}']
+      args: ['{{ .Release.Name }}:{{ .Values.service.servicePort }}']
   restartPolicy: Never
 {{ end }}
 {{- if (.Values.tests.curlHostHeader.enabled) }}
@@ -30,6 +30,6 @@ spec:
     - name: curl
       image: curlimages/curl:7.70.0 
       command: ['curl']
-      args: ['{{ .Release.Name }}:{{ .Values.app.servicePort }}{{ .Values.tests.curlHostHeader.path }}', '-H', '"Host:{{ .Values.ingress.hostName }}:{{ .Values.app.servicePort }}"']
+      args: ['{{ .Release.Name }}:{{ .Values.service.servicePort }}{{ .Values.tests.curlHostHeader.path }}', '-H', '"Host:{{ .Values.ingress.hostName }}:{{ .Values.service.servicePort }}"']
   restartPolicy: Never
 {{ end }}

@@ -30,8 +30,10 @@ spec:
         - name: {{ .Release.Name }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- if .Values.deployment.port }}
           ports:
-          - containerPort: {{ .Values.app.containerPort }}
+          - containerPort: {{ .Values.deployment.port }}
+          {{- end }}
           resources:
             requests:
               {{- if .Values.deployment.memoryRequest }}

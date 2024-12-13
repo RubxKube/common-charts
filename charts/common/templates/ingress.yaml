@@ -5,12 +5,14 @@ metadata:
   name: {{ .Release.Name }}
   labels:
     app: {{ .Release.Name }}
-{{- if .Values.ingress.certResolver }}
+{{- if .Values.ingress.annotations }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ .Values.ingress.certResolver }}
+  {{ toYaml .Values.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
-  {{ if .Values.ingress.ingressClassName }}ingressClassName: {{ .Values.ingress.ingressClassName }}{{ end }}
+  {{- if .Values.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  {{ end }}
   rules:
   - host: {{ required "A variable 'hostName' is required!" .Values.ingress.hostName }}
     http:
@@ -21,7 +23,7 @@ spec:
           service:
             name: {{ .Release.Name }}
             port:
-              number: 80
+              number: {{ .Values.app.containerPort }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
   - secretName: {{ .Values.ingress.tls.secretName }}
