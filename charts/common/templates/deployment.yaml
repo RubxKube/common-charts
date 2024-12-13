@@ -10,13 +10,8 @@ spec:
   selector:
     matchLabels:
       app: {{ .Release.Name }}
-  {{- with .Values.deployment.strategy }}
   strategy:
-    type: {{ .type }}
-    rollingUpdate:
-      maxUnavailable: {{ .rollingUpdate.maxUnavailable }}
-      maxSurge: {{ .rollingUpdate.maxSurge }}
-  {{- end }}
+  {{- toYaml .Values.deployment.strategy | nindent 4 }}
   template:
     metadata:
       labels:
