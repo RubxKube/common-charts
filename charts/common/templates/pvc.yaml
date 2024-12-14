@@ -8,8 +8,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    app: {{ $dot.Release.Name }} 
-  name: {{ $dot.Release.Name }}-{{ .name }}
+    app: {{ $dot.Values.name }} 
+  name: {{ $dot.Values.name }}-{{ .name }}
 spec:
       {{- if (.storageClassName) }}
   storageClassName: {{ .storageClassName }}

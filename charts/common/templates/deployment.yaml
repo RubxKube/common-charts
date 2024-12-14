@@ -105,22 +105,41 @@ spec:
           livenessProbe:
 {{ toYaml .Values.readinessProbe | indent 12 }}
           {{- end }}
-{{- if .Values.persistence.enabled }}
+{{- if or .Values.persistence.enabled .Values.deployment.emptyDir}}
           volumeMounts:
-  {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
-  {{- range $volumes }}
+  {{- if .Values.deployment.emptyDir }}
+    {{- range .Values.deployment.emptyDir }}
             - mountPath: {{ .containerMount }}
               name: {{ .name }}
+    {{- end }}
   {{- end }}
+  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir}}
+    {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
+    {{- range $volumes }}
+            - mountPath: {{ .containerMount }}
+              name: {{ .name }}
+    {{- end }}
+  {{- end }}
+
       volumes: 
-  {{- range $volumes }}
+  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir }}
+    {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
+    {{- range $volumes }}
         - name: {{ .name }}
           persistentVolumeClaim:
            {{- if (.pvcClaim) }} 
             claimName: {{ .pvcClaim }}
            {{ else }}
-            claimName: {{ $dot.Release.Name }}-{{ .name }}
+            claimName: {{ $dot.Values.name }}-{{ .name }}
            {{- end }}
+    {{- end }}
   {{- end }}
+    {{- if .Values.deployment.emptyDir }}
+    {{- range .Values.deployment.emptyDir }}
+        - name: {{ .name }}
+          emptyDir: {}
+    {{- end }}
+  {{- end }}
+
 {{- end }}
 

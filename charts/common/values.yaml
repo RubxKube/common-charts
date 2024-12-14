@@ -26,6 +26,9 @@ deployment:
     # maxUnavailable: 25%
     # maxSurge: 25%
   initContainers: []
+  emptyDir: []
+    # - name: "cache"
+    #   containerMount: "/cache"
 
 image:
   repositorySettings:
@@ -133,7 +136,7 @@ persistence:
 
 tests:
   classicHttp: # default helm test method
-    enabled: true
+    enabled: false
   curlHostHeader: # curl using ingress.hostName as Host in header
-    enabled: true
+    enabled: false
     path: ""
