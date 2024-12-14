@@ -35,6 +35,12 @@ spec:
           ports:
           - containerPort: {{ .Values.deployment.port }}
           {{- end }}
+          {{- if .Values.deployment.args }}
+          args:
+            {{- range .Values.deployment.args }}
+            - "{{ . }}"
+            {{- end }}
+          {{- end }}
           resources:
             requests:
               {{- if .Values.deployment.memoryRequest }}

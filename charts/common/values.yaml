@@ -19,6 +19,7 @@ deployment:
   cpuLimit: null
   port: *containerPort
   minReplicas: 1
+  args: []
   strategy:
     type: Recreate
     # rollingUpdate:
