@@ -25,6 +25,7 @@ deployment:
     # rollingUpdate:
       # maxUnavailable: 25%
       # maxSurge: 25%
+  initContainers: []
 
 image:
   repositorySettings:
