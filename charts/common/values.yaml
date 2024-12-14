@@ -1,5 +1,11 @@
 define: &containerPort 80
 
+
+# Name of the application
+# Since this chart is a template, you can change the name of the application
+# by changing the value of the name variable
+name: "my-app"
+
 service:
   type: ClusterIP
   enabled: true

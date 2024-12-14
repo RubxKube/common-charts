@@ -2,27 +2,27 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Values.name }}
   labels:
-    app: {{ .Release.Name }}
+    app: {{ .Values.name }}
 spec:
   replicas: {{ .Values.deployment.minReplicas }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: {{ .Values.name }}
   strategy:
   {{- toYaml .Values.deployment.strategy | nindent 4 }}
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: {{ .Values.name }}
     spec:
       {{- if .Values.image.repositorySettings.isPrivate }}
       imagePullSecrets:
         - name: "{{ .Values.image.repositorySettings.secretName }}"
       {{- end }}
       containers:
-        - name: {{ .Release.Name }}
+        - name: {{ .Values.name }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- if .Values.deployment.port }}

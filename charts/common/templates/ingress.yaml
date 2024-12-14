@@ -2,9 +2,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Values.name }}
   labels:
-    app: {{ .Release.Name }}
+    app: {{ .Values.name }}
 {{- if .Values.ingress.annotations }}
   annotations:
   {{ toYaml .Values.ingress.annotations | indent 4 }}
@@ -21,7 +21,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Release.Name }}
+            name: {{ .Values.name }}
             port:
               number: {{ .Values.app.containerPort }}
   {{- if .Values.ingress.tls.enabled }}
