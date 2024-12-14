@@ -94,12 +94,13 @@ spec:
           {{- end }}
 {{- if .Values.persistence.enabled }}
           volumeMounts:
-  {{- range .Values.persistence.volumes }}
+  {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
+  {{- range $volumes }}
             - mountPath: {{ .containerMount }}
               name: {{ .name }}
   {{- end }}
       volumes: 
-  {{- range .Values.persistence.volumes }}
+  {{- range $volumes }}
         - name: {{ .name }}
           persistentVolumeClaim:
            {{- if (.pvcClaim) }} 

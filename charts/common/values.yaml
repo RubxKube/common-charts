@@ -106,7 +106,7 @@ livenessProbe: {}
 
 
 persistence:
-  enabled: false
+  enabled: true
   volumes: []
   # - name: "data"
   #   storageClassName: "longhorn" # leave empty if you want to use default
@@ -121,6 +121,13 @@ persistence:
   # - name: "temp"
   #   pvcClaim: "existing" # leave empty unless if you want to use an existing PVC
   #   containerMount: "/testest"
+  extraVolumes: []
+  # - name: "config"
+  #   storageClassName: "longhorn"
+  #   size: "5Gi"
+  #   pvcClaim: ""
+  #   containerMount: "/config"
+    
 tests:
   classicHttp:  # default helm test method
     enabled: true

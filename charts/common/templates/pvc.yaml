@@ -1,6 +1,7 @@
 {{- if (.Values.persistence.enabled) }}
 {{- $dot := . }}
-  {{- range .Values.persistence.volumes }}
+  {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
+  {{- range $volumes }} 
     {{- if not (.pvcClaim) }}
 ---
 apiVersion: v1
@@ -10,9 +11,9 @@ metadata:
     app: {{ $dot.Release.Name }} 
   name: {{ $dot.Release.Name }}-{{ .name }}
 spec:
-  {{- if (.storageClassName) }}
+      {{- if (.storageClassName) }}
   storageClassName: {{ .storageClassName }}
-  {{- end }}
+      {{- end }}
   accessModes:
     - ReadWriteOnce
   resources:
