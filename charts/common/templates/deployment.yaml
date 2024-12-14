@@ -50,6 +50,13 @@ spec:
               {{- if .Values.deployment.cpuLimit }}
               cpu: "{{ .Values.deployment.cpuLimit }}"
               {{- end }}
+          {{- if .Values.variables.configMap.existingConfigMap }}
+          envFrom:
+            {{- range .Values.variables.configMap.existingConfigMap }}
+            - configMapRef:
+                name: {{ . }}
+            {{- end }}
+          {{- end }}
           {{- if or (.Values.variables.nonSecret) (.Values.variables.secret.data) (.Values.variables.secret.existingSecret) }}
           env:
             {{- if .Values.variables.nonSecret }}

@@ -47,6 +47,10 @@ ingress:
 
 # env variables
 variables:
+  configMap:
+    existingConfigMap: []
+      # - "existing-configmap-name"
+      # - "another-existing-configmap-name"
   secret:
     data: {}
     # user: "username"
@@ -59,7 +63,6 @@ variables:
       # - name: another-existing-secret
       #   key: key2
       #   envName: ENV2_NAME
-
   nonSecret: {}
 #    author: name
 #    app: 1
