@@ -1,6 +1,5 @@
 define: &containerPort 80
 
-
 # Name of the application
 # Since this chart is a template, you can change the name of the application
 # by changing the value of the name variable
@@ -23,8 +22,8 @@ deployment:
   strategy:
     type: Recreate
     # rollingUpdate:
-      # maxUnavailable: 25%
-      # maxSurge: 25%
+    # maxUnavailable: 25%
+    # maxSurge: 25%
   initContainers: []
 
 image:
@@ -52,7 +51,8 @@ variables:
     data: {}
     # user: "username"
     # password: "hugepassword"
-    existingSecret: []
+    existingSecret:
+      []
       # - name: "existing-secret-name"
       #   key: "key"
       #   envName: "ENV_NAME"
@@ -104,7 +104,6 @@ livenessProbe: {}
 # failureThreshold: 1
 # timeoutSeconds: 3
 
-
 persistence:
   enabled: true
   volumes: []
@@ -127,10 +126,10 @@ persistence:
   #   size: "5Gi"
   #   pvcClaim: ""
   #   containerMount: "/config"
-    
+
 tests:
-  classicHttp:  # default helm test method
+  classicHttp: # default helm test method
     enabled: true
-  curlHostHeader:  # curl using ingress.hostName as Host in header
+  curlHostHeader: # curl using ingress.hostName as Host in header
     enabled: true
     path: ""
