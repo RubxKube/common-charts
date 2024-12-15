@@ -59,8 +59,14 @@ variables:
     data: {}
     # user: "username"
     # password: "hugepassword"
-    existingSecret:
-      []
+    existingSecret: []
+      # - name: "existing-secret-name"
+      #   key: "key"
+      #   envName: "ENV_NAME"
+      # - name: another-existing-secret
+      #   key: key2
+      #   envName: ENV2_NAME
+    extraExistingSecrets: []
       # - name: "existing-secret-name"
       #   key: "key"
       #   envName: "ENV_NAME"

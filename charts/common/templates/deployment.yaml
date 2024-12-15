@@ -63,7 +63,7 @@ spec:
                 name: {{ . }}
             {{- end }}
           {{- end }}
-          {{- if or (.Values.variables.nonSecret) (.Values.variables.secret.data) (.Values.variables.secret.existingSecret) }}
+          {{- if or (.Values.variables.nonSecret) (.Values.variables.secret.data) (.Values.variables.secret.existingSecret) (.Values.variables.secret.extraExistingSecrets) }}
           env:
             {{- if .Values.variables.nonSecret }}
               {{- range $index, $value := .Values.variables.nonSecret }}
@@ -80,8 +80,9 @@ spec:
                 key: secret
               {{- end }}
             {{- end }}
-            {{- if .Values.variables.secret.existingSecret }}
-              {{- range $index, $value := .Values.variables.secret.existingSecret }}
+            {{- if or (.Values.variables.secret.existingSecret) (.Values.variables.secret.extraExistingSecrets) }}
+              {{- $secrets := concat .Values.variables.secret.existingSecret .Values.variables.secret.extraExistingSecrets }}
+              {{- range $index, $value := $secrets  }}
           - name: {{ $value.envName }}
             valueFrom:
               secretKeyRef:
