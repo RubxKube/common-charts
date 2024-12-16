@@ -23,7 +23,7 @@ spec:
           service:
             name: {{ .Values.name }}
             port:
-              number: {{ .Values.app.containerPort }}
+              number: {{ .Values.deployment.port }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
   - secretName: {{ .Values.ingress.tls.secretName }}
