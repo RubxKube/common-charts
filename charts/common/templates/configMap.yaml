@@ -1,0 +1,16 @@
+{{- if .Values.configMap.enabled -}}
+{{- $dot := . }}
+{{- range $index, $config := .Values.configMap.data }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ $dot.Values.name }}-{{ $config.name }}
+    labels:
+        app: {{ $dot.Values.name }}
+data:
+    {{- range $item := $config.data }}
+    {{- $item.content | toYaml | nindent 4 }}
+    {{- end -}}
+{{- end -}}
+{{- end -}}

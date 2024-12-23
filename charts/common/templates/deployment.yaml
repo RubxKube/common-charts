@@ -123,23 +123,29 @@ spec:
 {{ toYaml .Values.readinessProbe | indent 12 }}
           {{- end }}
 {{- if or .Values.persistence.enabled .Values.deployment.emptyDir}}
+  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled}}
           volumeMounts:
-  {{- if .Values.deployment.emptyDir }}
-    {{- range .Values.deployment.emptyDir }}
-            - mountPath: {{ .containerMount }}
-              name: {{ .name }}
-    {{- end }}
-  {{- end }}
-  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir}}
     {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
     {{- range $volumes }}
             - mountPath: {{ .containerMount }}
               name: {{ .name }}
     {{- end }}
+    {{- if .Values.deployment.emptyDir }}
+    {{- range .Values.deployment.emptyDir }}
+            - mountPath: {{ .containerMount }}
+              name: {{ .name }}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.configMap.enabled }}
+    {{- range .Values.configMap.data }}
+            - mountPath: {{ .mountPath }}
+              name: {{ $dot.Values.name }}-{{ .name }}
+    {{- end }}
+    {{- end }}
   {{- end }}
 
+  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled }}
       volumes: 
-  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir }}
     {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
     {{- range $volumes }}
         - name: {{ .name }}
@@ -156,7 +162,14 @@ spec:
         - name: {{ .name }}
           emptyDir: {}
     {{- end }}
-  {{- end }}
-
+    {{- end }}
+    {{- if .Values.configMap.enabled }}
+    {{- range .Values.configMap.data }}
+        - name: {{ $dot.Values.name }}-{{ .name }}
+          configMap:
+            defaultMode: {{ .defaultMode | default 0644 }}
+            name: {{ $dot.Values.name }}-{{ .name }}
+    {{- end }}
+    {{- end }}
 {{- end }}
 

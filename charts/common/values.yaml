@@ -26,7 +26,8 @@ deployment:
     # maxUnavailable: 25%
     # maxSurge: 25%
   initContainers: []
-  emptyDir: []
+  emptyDir:
+    []
     # - name: "cache"
     #   containerMount: "/cache"
 
@@ -46,27 +47,51 @@ ingress:
   tls:
     enabled: true
     secretName: ""
-  # For Ingress CRD
-  ingressClassName: istio
+  ingressClassName: ""
 
-# env variables
+configMap:
+  enabled: true
+  data:
+    []
+    # - name: "init"
+    #   mountPath: "/etc/init"
+    #   defaultMode: 0777
+    #   data:
+    #     - content:
+    #         init.sh: |
+    #           #!/bin/bash
+    #           echo "Hello World"
+    # - name: "bye"
+    #   mountPath: "/etc/bye"
+    #   data:
+    #     - content:
+    #         bye.sh: |
+    #           #!/bin/bash
+    #           echo "Goodbye World"
+
+extraConfigMaps: []
+
+# Environment variables
 variables:
   configMap:
-    existingConfigMap: []
+    existingConfigMap:
+      []
       # - "existing-configmap-name"
       # - "another-existing-configmap-name"
   secret:
     data: {}
     # user: "username"
     # password: "hugepassword"
-    existingSecret: []
+    existingSecret:
+      []
       # - name: "existing-secret-name"
       #   key: "key"
       #   envName: "ENV_NAME"
       # - name: another-existing-secret
       #   key: key2
       #   envName: ENV2_NAME
-    extraExistingSecrets: []
+    extraExistingSecrets:
+      []
       # - name: "existing-secret-name"
       #   key: "key"
       #   envName: "ENV_NAME"
