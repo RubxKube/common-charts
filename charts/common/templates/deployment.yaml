@@ -122,9 +122,16 @@ spec:
           livenessProbe:
 {{ toYaml .Values.readinessProbe | indent 12 }}
           {{- end }}
-{{- if or .Values.persistence.enabled .Values.deployment.emptyDir}}
-  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled}}
+{{- if or .Values.persistence.enabled .Values.deployment.emptyDir .Values.configMap.existingConfigMap }}
+  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled  .Values.configMap.existingConfigMap }}
           volumeMounts:
+    {{ range .Values.configMap.existingConfigMap }}
+            - mountPath: {{ .mountPath }}
+              name: {{ .name }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+              {{- end }}
+    {{- end }}
     {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
     {{- range $volumes }}
             - mountPath: {{ .containerMount }}
@@ -144,7 +151,7 @@ spec:
     {{- end }}
   {{- end }}
 
-  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled }}
+  {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled .Values.configMap.existingConfigMap }}
       volumes: 
     {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
     {{- range $volumes }}
@@ -155,6 +162,11 @@ spec:
            {{ else }}
             claimName: {{ $dot.Values.name }}-{{ .name }}
            {{- end }}
+    {{- end }}
+    {{ range .Values.configMap.existingConfigMap }}
+        - name: {{ .name }}
+          configMap:
+            name: {{ .name }}
     {{- end }}
   {{- end }}
     {{- if .Values.deployment.emptyDir }}
