@@ -14,5 +14,6 @@ spec:
   ports:
   - targetPort: {{ .Values.deployment.port }}
     port: {{ .Values.service.servicePort }}
+    protocol: {{ .Values.service.protocol }}
   type: {{ .Values.service.type }}
 {{- end }}

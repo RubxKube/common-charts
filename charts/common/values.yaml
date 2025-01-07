@@ -11,6 +11,7 @@ service:
   servicePort: 80
   containerPort: *containerPort
   extraLabels: {}
+  protocol: TCP
 
 deployment:
   memoryRequest: null
@@ -57,21 +58,22 @@ configMap:
     #   mountPath: "/etc/config.yaml"
     #   subPath: "config.yaml"
   data:
-    - name: "init"
-      mountPath: "/etc/toto"
-      defaultMode: 0777
-      data:
-        - content:
-            init.sh: |
-              #!/bin/bash
-              echo "Hello World"
-    - name: "bye"
-      mountPath: "/etc/bye"
-      data:
-        - content:
-            bye.sh: |
-              #!/bin/bash
-              echo "Goodbye World"
+    []
+    # - name: "init"
+    #   mountPath: "/etc/toto"
+    #   defaultMode: 0777
+    #   data:
+    #     - content:
+    #         init.sh: |
+    #           #!/bin/bash
+    #           echo "Hello World"
+    # - name: "bye"
+    #   mountPath: "/etc/bye"
+    #   data:
+    #     - content:
+    #         bye.sh: |
+    #           #!/bin/bash
+    #           echo "Goodbye World"
 
 extraConfigMaps: []
 
