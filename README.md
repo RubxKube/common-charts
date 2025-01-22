@@ -16,9 +16,9 @@ helm repo add rubxkube-common https://rubxkube.github.io/common-charts/ # Add th
 
 | Name  | Description | Chart Version | App Version |
 |-------|-------------|---------------|-------------|
-| common | Helm chart for generic app on Kubernetes | v0.4.2 | 0 |
+| common | Helm chart for generic app on Kubernetes | v0.4.3 | 0 |
 
 
 # Contributing 
 
-We gladly accept Pull-Requests, feel free to open one if you want to correct/add a chart. Besure to follow the [chart best practices](https://helm.sh/docs/chart_best_practices/).
+We gladly accept Pull-Requests, feel free to open one if you want to correct/add a chart. Be sure to follow the [chart best practices](https://helm.sh/docs/chart_best_practices/).
