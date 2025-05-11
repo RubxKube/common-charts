@@ -5,6 +5,10 @@ metadata:
   name: {{ .Values.name }}
   labels:
     app: {{ .Values.name }}
+  {{- if .Values.deployment.annotations }}
+  annotations:
+    {{- toYaml .Values.deployment.annotations | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.deployment.minReplicas }}
   selector:
@@ -16,6 +20,10 @@ spec:
     metadata:
       labels:
         app: {{ .Values.name }}
+        {{- if .Values.deployment.annotations }}
+      annotations:
+        {{- toYaml .Values.deployment.annotations | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.image.repositorySettings.isPrivate }}
       imagePullSecrets:
@@ -97,7 +105,7 @@ spec:
                 name: {{ $value.name }}
                 key: {{ $value.key }}
               {{- end }}
-            
+
             {{- else if (.Values.variables.secret.extraExistingSecrets) -}}
               {{- range $index, $value := .Values.variables.secret.extraExistingSecrets }}
           - name: {{ $value.envName }}
@@ -152,12 +160,12 @@ spec:
   {{- end }}
 
   {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled .Values.configMap.existingConfigMap }}
-      volumes: 
+      volumes:
     {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
     {{- range $volumes }}
         - name: {{ .name }}
           persistentVolumeClaim:
-           {{- if (.pvcClaim) }} 
+           {{- if (.pvcClaim) }}
             claimName: {{ .pvcClaim }}
            {{ else }}
             claimName: {{ $dot.Values.name }}-{{ .name }}
@@ -184,4 +192,3 @@ spec:
     {{- end }}
     {{- end }}
 {{- end }}
-
