@@ -8,6 +8,10 @@ metadata:
   {{- if .Values.service.extraLabels }}
     {{ .Values.service.extraLabels | toYaml | nindent 4 }}
   {{- end }}
+  {{- if .Values.service.annotations }}
+  annotations:
+    {{- toYaml .Values.service.annotations | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     app: {{ .Values.name }}
