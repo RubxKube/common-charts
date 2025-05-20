@@ -9,9 +9,9 @@ metadata:
     "helm.sh/hook": test
 spec:
   containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
+    - name: curl
+      image: curlimages/curl
+      command: ['curl', '-v']
       args: ['{{ .Values.name }}:{{ .Values.service.servicePort }}']
   restartPolicy: Never
 {{ end }}
@@ -29,7 +29,7 @@ spec:
   containers:
     - name: curl
       image: curlimages/curl:7.70.0 
-      command: ['curl']
+      command: ['curl', '-v']
       args: ['{{ .Values.name }}:{{ .Values.service.servicePort }}{{ .Values.tests.curlHostHeader.path }}', '-H', '"Host:{{ .Values.ingress.hostName }}:{{ .Values.service.servicePort }}"']
   restartPolicy: Never
 {{ end }}
