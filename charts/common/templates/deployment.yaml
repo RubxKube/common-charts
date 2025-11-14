@@ -158,6 +158,11 @@ spec:
     {{- end }}
     {{- end }}
   {{- end }}
+      {{- if .Values.deployment.additionalContainers }}
+        {{- with .Values.deployment.additionalContainers }}
+          {{- toYaml . | nindent 8 }}
+        {{ end }}
+      {{- end }}
 
   {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled .Values.configMap.existingConfigMap }}
       volumes:

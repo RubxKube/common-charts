@@ -27,6 +27,25 @@ deployment:
     # maxUnavailable: 25%
     # maxSurge: 25%
   initContainers: []
+  additionalContainers: []
+  # - name: "sidecar-container"
+  #   image: "nginx:alpine"
+  #   imagePullPolicy: "IfNotPresent"
+  #   ports:
+  #     - containerPort: 8080
+  #   env:
+  #     - name: "ENV_VAR"
+  #       value: "value"
+  #   resources:
+  #     requests:
+  #       memory: "64Mi"
+  #       cpu: "250m"
+  #     limits:
+  #       memory: "128Mi"
+  #       cpu: "500m"
+  #   volumeMounts:
+  #     - name: "shared-data"
+  #       mountPath: "/shared"
   emptyDir:
     []
     # - name: "cache"
