@@ -35,8 +35,10 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{ end }}
       {{- end }}
+      {{- with .Values.deployment.podSecurityContext }}
       securityContext:
-        {{- toYaml .Values.deployment.podSecurityContext | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       {{- if .Values.deployment.additionalContainers }}
         {{- with .Values.deployment.additionalContainers }}
@@ -44,8 +46,10 @@ spec:
         {{- end }}
       {{- end }}
         - name: {{ .Values.name }}
+          {{- with .Values.deployment.securityContext }}
           securityContext:
-            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- if .Values.deployment.port }}
