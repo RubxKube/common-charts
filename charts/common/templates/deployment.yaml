@@ -133,11 +133,11 @@ spec:
           {{- end }}
           {{- if .Values.readinessProbeEnabled }}
           readinessProbe:
-{{ toYaml .Values.readinessProbe | indent 12 }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           {{- end }}
           {{- if .Values.livenessProbeEnabled }}
           livenessProbe:
-{{ toYaml .Values.readinessProbe | indent 12 }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           {{- end }}
 {{- if or .Values.persistence.enabled .Values.deployment.emptyDir .Values.configMap.existingConfigMap }}
   {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled  .Values.configMap.existingConfigMap }}
@@ -155,16 +155,16 @@ spec:
               name: {{ .name }}
     {{- end }}
     {{- if .Values.deployment.emptyDir }}
-    {{- range .Values.deployment.emptyDir }}
+    {{-   range .Values.deployment.emptyDir }}
             - mountPath: {{ .containerMount }}
               name: {{ .name }}
-    {{- end }}
+    {{-   end }}
     {{- end }}
     {{- if .Values.configMap.enabled }}
-    {{- range .Values.configMap.data }}
+    {{-   range .Values.configMap.data }}
             - mountPath: {{ .mountPath }}
               name: {{ $dot.Values.name }}-{{ .name }}
-    {{- end }}
+    {{-   end }}
     {{- end }}
   {{- end }}
   {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled .Values.configMap.existingConfigMap }}

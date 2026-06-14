@@ -13,6 +13,7 @@ service:
   extraLabels: {}
   protocol: TCP
   annotations: {}
+
 deployment:
   memoryRequest: null
   cpuRequest: null
@@ -65,6 +66,7 @@ deployment:
     # - name: "cache"
     #   containerMount: "/cache"
   annotations: {}
+
 image:
   repositorySettings:
     isPrivate: false
