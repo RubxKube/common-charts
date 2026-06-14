@@ -36,6 +36,11 @@ spec:
         {{ end }}
       {{- end }}
       containers:
+      {{- if .Values.deployment.additionalContainers }}
+        {{- with .Values.deployment.additionalContainers }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
         - name: {{ .Values.name }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -158,12 +163,6 @@ spec:
     {{- end }}
     {{- end }}
   {{- end }}
-      {{- if .Values.deployment.additionalContainers }}
-        {{- with .Values.deployment.additionalContainers }}
-          {{- toYaml . | nindent 8 }}
-        {{ end }}
-      {{- end }}
-
   {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled .Values.configMap.existingConfigMap }}
       volumes:
     {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
