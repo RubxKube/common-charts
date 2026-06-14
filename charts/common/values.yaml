@@ -21,11 +21,25 @@ deployment:
   port: *containerPort
   minReplicas: 1
   args: []
+  podSecurityContext: {}
+  # fsGroup: 2000
+  securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
   strategy:
     type: Recreate
     # rollingUpdate:
     # maxUnavailable: 25%
     # maxSurge: 25%
+
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
   initContainers: []
   additionalContainers: []
   # - name: "sidecar-container"
