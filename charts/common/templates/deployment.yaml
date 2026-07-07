@@ -35,8 +35,21 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{ end }}
       {{- end }}
+      {{- with .Values.deployment.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
+      {{- if .Values.deployment.additionalContainers }}
+        {{- with .Values.deployment.additionalContainers }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
         - name: {{ .Values.name }}
+          {{- with .Values.deployment.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- if .Values.deployment.port }}
@@ -124,16 +137,16 @@ spec:
           {{- end }}
           {{- if .Values.readinessProbeEnabled }}
           readinessProbe:
-{{ toYaml .Values.readinessProbe | indent 12 }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           {{- end }}
           {{- if .Values.livenessProbeEnabled }}
           livenessProbe:
-{{ toYaml .Values.readinessProbe | indent 12 }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           {{- end }}
 {{- if or .Values.persistence.enabled .Values.deployment.emptyDir .Values.configMap.existingConfigMap }}
   {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled  .Values.configMap.existingConfigMap }}
           volumeMounts:
-    {{ range .Values.configMap.existingConfigMap }}
+    {{- range .Values.configMap.existingConfigMap }}
             - mountPath: {{ .mountPath }}
               name: {{ .name }}
               {{- if .subPath }}
@@ -146,24 +159,18 @@ spec:
               name: {{ .name }}
     {{- end }}
     {{- if .Values.deployment.emptyDir }}
-    {{- range .Values.deployment.emptyDir }}
+    {{-   range .Values.deployment.emptyDir }}
             - mountPath: {{ .containerMount }}
               name: {{ .name }}
-    {{- end }}
+    {{-   end }}
     {{- end }}
     {{- if .Values.configMap.enabled }}
-    {{- range .Values.configMap.data }}
+    {{-   range .Values.configMap.data }}
             - mountPath: {{ .mountPath }}
               name: {{ $dot.Values.name }}-{{ .name }}
-    {{- end }}
+    {{-   end }}
     {{- end }}
   {{- end }}
-      {{- if .Values.deployment.additionalContainers }}
-        {{- with .Values.deployment.additionalContainers }}
-          {{- toYaml . | nindent 8 }}
-        {{ end }}
-      {{- end }}
-
   {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled .Values.configMap.existingConfigMap }}
       volumes:
     {{- $volumes := concat .Values.persistence.volumes .Values.persistence.extraVolumes }}
@@ -197,3 +204,15 @@ spec:
     {{- end }}
     {{- end }}
 {{- end }}
+    {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
