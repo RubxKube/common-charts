@@ -3,6 +3,27 @@ entries:
   common:
   - apiVersion: v1
     appVersion: "0"
+    created: "2026-07-07T14:48:44.310202793Z"
+    description: Helm chart for generic app on Kubernetes
+    digest: 4fc4285dad3b2a64df12c490a1397f69dacde8db1c23ad28292c6eeccaa7f98f
+    home: https://github.com/RubxKube/common-charts
+    keywords:
+    - generic
+    - monolithic
+    - ingress
+    kubeVersion: '>= 1.18'
+    maintainers:
+    - email: github@une-pause-cafe.fr
+      name: QJOLY
+      url: https://une-tasse-de.cafe
+    name: common
+    sources:
+    - https://github.com/RubxKube/common-charts
+    urls:
+    - https://github.com/RubxKube/common-charts/releases/download/common-v0.6.0/common-v0.6.0.tgz
+    version: v0.6.0
+  - apiVersion: v1
+    appVersion: "0"
     created: "2025-11-14T15:50:42.476741148Z"
     description: Helm chart for generic app on Kubernetes
     digest: 73812f778b81288f827aca5f3b3b7b8b70234fa8517fd4a22877dc35956952d5
@@ -492,4 +513,4 @@ entries:
     urls:
     - https://github.com/RubxKube/common-charts/releases/download/common-v0.1.0/common-v0.1.0.tgz
     version: v0.1.0
-generated: "2025-11-14T15:50:42.476884726Z"
+generated: "2026-07-07T14:48:44.310394796Z"
