@@ -6,7 +6,7 @@
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/qjoly)](https://artifacthub.io/packages/search?repo=qjoly)
 
-# How to use ?
+# How to use ? 
 
 ```bash
 helm repo add rubxkube-common https://rubxkube.github.io/common-charts/ # Add the repo to your helm
@@ -19,6 +19,6 @@ helm repo add rubxkube-common https://rubxkube.github.io/common-charts/ # Add th
 | common | Helm chart for generic app on Kubernetes | v0.6.0 | 0 |
 
 
-# Contributing
+# Contributing 
 
 We gladly accept Pull-Requests, feel free to open one if you want to correct/add a chart. Besure to follow the [chart best practices](https://helm.sh/docs/chart_best_practices/).
