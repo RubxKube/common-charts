@@ -172,6 +172,8 @@ readinessProbe: {}
 # timeoutSeconds: 3
 
 # livenessProbe
+# If livenessProbe is left empty ({}), the liveness probe falls back to
+# the readinessProbe values. Set livenessProbe explicitly to override.
 livenessProbeEnabled: false
 livenessProbe: {}
 # enabled: true

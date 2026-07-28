@@ -141,7 +141,7 @@ spec:
           {{- end }}
           {{- if .Values.livenessProbeEnabled }}
           livenessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            {{- toYaml (.Values.livenessProbe | default .Values.readinessProbe) | nindent 12 }}
           {{- end }}
 {{- if or .Values.persistence.enabled .Values.deployment.emptyDir .Values.configMap.existingConfigMap }}
   {{- if or .Values.persistence.volumes .Values.persistence.extraVolumes .Values.deployment.emptyDir .Values.configMap.enabled  .Values.configMap.existingConfigMap }}
