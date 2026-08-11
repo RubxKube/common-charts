@@ -30,6 +30,6 @@ spec:
     - name: curl
       image: curlimages/curl:7.70.0 
       command: ['curl', '-v']
-      args: ['{{ .Values.name }}:{{ .Values.service.servicePort }}{{ .Values.tests.curlHostHeader.path }}', '-H', '"Host:{{ .Values.ingress.hostName }}:{{ .Values.service.servicePort }}"']
+      args: ['{{ .Values.name }}:{{ .Values.service.servicePort }}{{ .Values.tests.curlHostHeader.path }}', '-H', 'Host:{{ .Values.ingress.hostName }}:{{ .Values.service.servicePort }}']
   restartPolicy: Never
 {{ end }}
