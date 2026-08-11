@@ -160,8 +160,10 @@ spec:
     {{- end }}
     {{- if .Values.deployment.emptyDir }}
     {{-   range .Values.deployment.emptyDir }}
+    {{-     if .containerMount }}
             - mountPath: {{ .containerMount }}
               name: {{ .name }}
+    {{-     end }}
     {{-   end }}
     {{- end }}
     {{- if .Values.configMap.enabled }}

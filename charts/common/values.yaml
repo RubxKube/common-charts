@@ -65,6 +65,9 @@ deployment:
     []
     # - name: "cache"
     #   containerMount: "/cache"
+    # Omit containerMount to declare the volume without mounting it in the app
+    # container, e.g. when only an additionalContainers entry needs it:
+    # - name: "sidecar-scratch"
   annotations: {}
 
 image:
