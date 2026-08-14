@@ -126,6 +126,7 @@ variables:
     data: {}
     # user: "username"
     # password: "hugepassword"
+    # auto_generated_key: ""   # -> random 48-char secret, stable across upgrades
     existingSecret:
       []
       # - name: "existing-secret-name"
